@@ -159,13 +159,11 @@ A main függvény végrehajtása során a következő műveletek történnek:
 sequenceDiagram
     autonumber
     participant main
-    create participant MessageFile
-    main ->> MessageFile: MessageFile()
+    participant MessageFile
     main ->>+ MessageFile: loadfile(file_name)
     MessageFile -->>- main: message_string
-    create participant CipherFile
+    participant CipherFile
     participant CipherFactory
-    main ->> CipherFile: CipherFile()
     main ->>+ CipherFile: loadfile(file_name)
     CipherFile ->>+ StringFuncs: split(file_content, delimiter)
     StringFuncs -->>- CipherFile: cipherStrings*
