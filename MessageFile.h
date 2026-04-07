@@ -11,7 +11,7 @@
  */
 class MessageFile {
     /// Kimenetett fájl neve, ahová a saveToFile metódus ír.
-    static std::string output_file_name;
+    static const char* output_file_name;
 public:
     /**
      * Alap konstruktor.

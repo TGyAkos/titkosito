@@ -13,6 +13,8 @@ void \doxymbox{\hyperlink{class_cipher_factory_a62d70f9e69c31b521f261a3d3f4f3ff4
 \item 
 bool \doxymbox{\hyperlink{class_cipher_factory_ad5da11fd1168242b036860c43e58b4f7}{cipher\+Exists}} (const std::\+string \&name) const
 \item 
+void \doxymbox{\hyperlink{class_cipher_factory_a8b8e17c7ea498e00e97b7d1af86f7861}{clear\+Registry}} ()
+\item 
 \doxymbox{\hyperlink{class_cipher_factory_aaef1de73595b6b2a904ffefdd79e714c}{\texorpdfstring{$\sim$}{\string~}\+Cipher\+Factory}} ()
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Member Functions}
@@ -53,7 +55,13 @@ Ellenőrzi, hogy létezik-\/e a megadott nevű kódoló.
 \begin{DoxyReturn}{Returns}
 igaz, ha a kódoló regisztrálva van 
 \end{DoxyReturn}
-\Hypertarget{class_cipher_factory_ab2c9a736e7649cd6232232857a8064df}\index{CipherFactory@{CipherFactory}!createCipher@{createCipher}}
+\Hypertarget{class_cipher_factory_a8b8e17c7ea498e00e97b7d1af86f7861}\index{CipherFactory@{CipherFactory}!clearRegistry@{clearRegistry}}
+\index{clearRegistry@{clearRegistry}!CipherFactory@{CipherFactory}}
+\doxysubsubsection{\texorpdfstring{clearRegistry()}{clearRegistry()}}
+{\footnotesize\ttfamily \label{class_cipher_factory_a8b8e17c7ea498e00e97b7d1af86f7861} 
+void Cipher\+Factory::\+clear\+Registry (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Kiüríti a regisztrált kódolók tárolóját. Ezt célszerű még a program futása közben meghívni, hogy ne statikus destrukció során történjen a felszabadítás. \Hypertarget{class_cipher_factory_ab2c9a736e7649cd6232232857a8064df}\index{CipherFactory@{CipherFactory}!createCipher@{createCipher}}
 \index{createCipher@{createCipher}!CipherFactory@{CipherFactory}}
 \doxysubsubsection{\texorpdfstring{createCipher()}{createCipher()}}
 {\footnotesize\ttfamily \label{class_cipher_factory_ab2c9a736e7649cd6232232857a8064df} 

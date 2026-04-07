@@ -5,7 +5,7 @@
 ```mermaid
 classDiagram
     class MessageFile {
-        -output_file_name: const std::string : static
+        -output_file_name: const const char* : static
         +MessageFile()
         +loadFile(file_name: const std::string&) std::string : static
         +saveToFile(message: const std::string&) : static
@@ -20,12 +20,14 @@ classDiagram
 
     class CipherFactory {
         <<singleton>>
-        -ciphers: std::unordered_map~std::string, std::function< Cipher*(const std::vector<std::string>)&>~)
+        -ciphers: std::unordered_map~std::string, std::function< Cipher*(const std::vector<std::string>)&>~* )
         -parseCipherString(cipher_string: const std::string&) std::vector~std::string~ : static
+        -CipherFactory()
         +getInstance() CipherFactory& : static
         +registerCipher(cipher_name: const std::string&, cipher : std::function< Cipher*(const std::vector<std::string>&)>~)
         +createCipher(cipher_string: const std::string&) Cipher* \n
         +cipherExists(const std::string& cipher_name) bool const
+        +clearRegistry()
         +~CipherFactory()
     }
 

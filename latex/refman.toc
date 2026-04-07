@@ -32,10 +32,11 @@
 \contentsline {subsubsection}{\numberline {4.3.2.1}$\sim $CipherFactory()}{12}{subsubsection.4.3.2.1}%
 \contentsline {subsection}{\numberline {4.3.3}Member Function Documentation}{12}{subsection.4.3.3}%
 \contentsline {subsubsection}{\numberline {4.3.3.1}cipherExists()}{12}{subsubsection.4.3.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.3.2}createCipher()}{13}{subsubsection.4.3.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3.3}getInstance()}{13}{subsubsection.4.3.3.3}%
-\contentsline {subsubsection}{\numberline {4.3.3.4}registerCipher()}{13}{subsubsection.4.3.3.4}%
-\contentsline {section}{\numberline {4.4}Cipher\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File Class Reference}{13}{section.4.4}%
+\contentsline {subsubsection}{\numberline {4.3.3.2}clearRegistry()}{13}{subsubsection.4.3.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3.3}createCipher()}{13}{subsubsection.4.3.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.3.4}getInstance()}{13}{subsubsection.4.3.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.3.5}registerCipher()}{13}{subsubsection.4.3.3.5}%
+\contentsline {section}{\numberline {4.4}Cipher\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File Class Reference}{14}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}Detailed Description}{14}{subsection.4.4.1}%
 \contentsline {subsection}{\numberline {4.4.2}Constructor \& Destructor Documentation}{14}{subsection.4.4.2}%
 \contentsline {subsubsection}{\numberline {4.4.2.1}CipherFile()}{14}{subsubsection.4.4.2.1}%

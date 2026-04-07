@@ -16,13 +16,17 @@
  */
 class CipherFactory {
     /// Kódolónév -> létrehozó függvény társítások tárolója.
-    std::unordered_map<std::string, std::function<Cipher*(const std::vector<std::string>&)>> ciphers;
+    std::unordered_map<std::string, std::function<Cipher*(const std::vector<std::string>&)>>* ciphers;
     /**
      * Feldarabolja a kódoló leíró stringet névre és paraméterekre.
      * @param   cipher_string a feldolgozandó kódoló leírás
      * @return  az első elem a kódolónév, utána a paraméterek
      */
     static std::vector<std::string> parseCipherString(const std::string& cipher_string);
+    /**
+     * Privát konstruktor, hogy ne lehessen példányosítani.
+     */
+    CipherFactory() : ciphers(new std::unordered_map<std::string, std::function<Cipher*(const std::vector<std::string>&)>>()) {}
 public:
     /**
      * Visszaadja a gyár egyetlen példányát.
@@ -47,6 +51,12 @@ public:
      * @return  igaz, ha a kódoló regisztrálva van
      */
     bool cipherExists(const std::string& name) const;
+    /**
+      * Kiüríti a regisztrált kódolók tárolóját.
+      * Ezt célszerű még a program futása közben meghívni,
+      * hogy ne statikus destrukció során történjen a felszabadítás.
+      */
+    void clearRegistry();
     /**
      * Alap destruktor.
      */

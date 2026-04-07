@@ -28,7 +28,7 @@ CipherFactory &CipherFactory::getInstance() {
     return instance;
 }
 void CipherFactory::registerCipher(const std::string &name, std::function<Cipher*(const std::vector<std::string>&)> cipher) {
-    ciphers[name] = cipher;
+    (*ciphers)[name] = cipher;
 }
 Cipher* CipherFactory::createCipher(const std::string& cipher_string) {
     auto parts = parseCipherString(cipher_string);
@@ -37,12 +37,11 @@ Cipher* CipherFactory::createCipher(const std::string& cipher_string) {
     const std::string& name = parts[0];
     std::vector<std::string> params(parts.begin() + 1, parts.end());
 
-    auto it = ciphers.find(name);
-    if (it == ciphers.end())
+    auto it = ciphers->find(name);
+    if (it == ciphers->end())
         throw std::runtime_error("Invalid cipher name " + name);
     return it->second(params);
 }
-bool CipherFactory::cipherExists(const std::string &name) const { return ciphers.find(name) != ciphers.end(); }
-CipherFactory::~CipherFactory() {
-    ciphers.clear();
-}
+bool CipherFactory::cipherExists(const std::string &name) const { return ciphers->find(name) != ciphers->end(); }
+void CipherFactory::clearRegistry() { ciphers->clear(); delete ciphers; ciphers = nullptr;}
+CipherFactory::~CipherFactory() { if (ciphers) {ciphers->clear(); delete ciphers;}}

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "CipherFactory.h"
 #include "CipherFile.h"
 #include "CipherList.h"
 #include "MessageFile.h"
@@ -11,17 +12,18 @@
 
 #ifdef INCLUDE_TESTS
 #include "test.h"
-std::string MessageFile::output_file_name = "./testresult.txt";
+const char* MessageFile::output_file_name = "./testresult.txt";
 #else
-std::string MessageFile::output_file_name = "./result.txt";
+const char* MessageFile::output_file_name = "./result.txt";
 #endif
 
 int main(int argc, char *argv[]) {
-    try {
 #ifdef INCLUDE_TESTS
         tests();
+        CipherFactory::getInstance().clearRegistry();
         return 0;
 #endif
+    try {
         std::string message_file_name, cipher_file_name, coded_message_string;
         bool isDecoding = false;
         if (strcmp(argv[1], "-r") == 0) {
@@ -41,8 +43,10 @@ int main(int argc, char *argv[]) {
         MessageFile::saveToFile(coded_message_string);
         CipherFile::saveToFile(cipher_file_name, cipher_list);
         delete cipher_list;
+        CipherFactory::getInstance().clearRegistry();
         return 0;
     } catch (std::exception &e) {
+        CipherFactory::getInstance().clearRegistry();
         std::cerr << e.what() << std::endl;
     }
 }

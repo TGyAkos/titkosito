@@ -14,19 +14,21 @@
 \DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}Cipher.h"{}}}
 \DoxyCodeLine{00012\ }
 \DoxyCodeLine{00013\ }
-\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_cipher_factory}{CipherFactory}}\ \{}
-\DoxyCodeLine{00019\ \ \ \ \ std::unordered\_map<std::string,\ std::function<\doxymbox{\hyperlink{class_cipher}{Cipher}}*(\textcolor{keyword}{const}\ std::vector<std::string>\&)>>\ ciphers;}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }CipherFactory\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ std::unordered\_map<std::string,\ std::function<\doxymbox{\hyperlink{class_cipher}{Cipher}}*(\textcolor{keyword}{const}\ std::vector<std::string>\&)>>*\ ciphers;}
 \DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<std::string>\ parseCipherString(\textcolor{keyword}{const}\ std::string\&\ cipher\_string);}
-\DoxyCodeLine{00026\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{static}\ \doxymbox{\hyperlink{class_cipher_factory}{CipherFactory}}\&\ \doxymbox{\hyperlink{class_cipher_factory_adb4e3de938765f8927830cb6eb75ec31}{getInstance}}();}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_cipher_factory_a62d70f9e69c31b521f261a3d3f4f3ff4}{registerCipher}}(\textcolor{keyword}{const}\ std::string\&\ name,\ std::function<\doxymbox{\hyperlink{class_cipher}{Cipher}}*(\textcolor{keyword}{const}\ std::vector<std::string>\&)>\ cipher);}
-\DoxyCodeLine{00043\ \ \ \ \ \doxymbox{\hyperlink{class_cipher}{Cipher}}*\ \doxymbox{\hyperlink{class_cipher_factory_ab2c9a736e7649cd6232232857a8064df}{createCipher}}(\textcolor{keyword}{const}\ std::string\&\ name);}
-\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_cipher_factory_ad5da11fd1168242b036860c43e58b4f7}{cipherExists}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
-\DoxyCodeLine{00053\ \ \ \ \ \doxymbox{\hyperlink{class_cipher_factory_aaef1de73595b6b2a904ffefdd79e714c}{\string~CipherFactory}}();}
-\DoxyCodeLine{00054\ \};}
-\DoxyCodeLine{00055\ }
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ }
-\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//TITKOSITO\_CIPHERFACTORY\_H}}
+\DoxyCodeLine{00029\ \ \ \ \ CipherFactory()\ :\ ciphers(\textcolor{keyword}{new}\ std::unordered\_map<std::string,\ std::function<\doxymbox{\hyperlink{class_cipher}{Cipher}}*(\textcolor{keyword}{const}\ std::vector<std::string>\&)>>())\ \{\}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{static}\ CipherFactory\&\ \doxymbox{\hyperlink{class_cipher_factory_adb4e3de938765f8927830cb6eb75ec31}{getInstance}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_cipher_factory_a62d70f9e69c31b521f261a3d3f4f3ff4}{registerCipher}}(\textcolor{keyword}{const}\ std::string\&\ name,\ std::function<\doxymbox{\hyperlink{class_cipher}{Cipher}}*(\textcolor{keyword}{const}\ std::vector<std::string>\&)>\ cipher);}
+\DoxyCodeLine{00047\ \ \ \ \ \doxymbox{\hyperlink{class_cipher}{Cipher}}*\ \doxymbox{\hyperlink{class_cipher_factory_ab2c9a736e7649cd6232232857a8064df}{createCipher}}(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_cipher_factory_ad5da11fd1168242b036860c43e58b4f7}{cipherExists}}(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_cipher_factory_a8b8e17c7ea498e00e97b7d1af86f7861}{clearRegistry}}();}
+\DoxyCodeLine{00063\ \ \ \ \ \doxymbox{\hyperlink{class_cipher_factory_aaef1de73595b6b2a904ffefdd79e714c}{\string~CipherFactory}}();}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//TITKOSITO\_CIPHERFACTORY\_H}}
 
 \end{DoxyCode}

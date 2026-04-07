@@ -53,10 +53,11 @@
     \subitem {\texorpdfstring{$\sim$}{\string~}CipherFactory}, 
 		\hyperpage{12}
     \subitem {cipherExists}, \hyperpage{12}
-    \subitem {createCipher}, \hyperpage{12}
+    \subitem {clearRegistry}, \hyperpage{12}
+    \subitem {createCipher}, \hyperpage{13}
     \subitem {getInstance}, \hyperpage{13}
     \subitem {registerCipher}, \hyperpage{13}
-  \item {CipherFile}, \hyperpage{13}
+  \item {CipherFile}, \hyperpage{14}
     \subitem {\texorpdfstring{$\sim$}{\string~}CipherFile}, 
 		\hyperpage{14}
     \subitem {CipherFile}, \hyperpage{14}
@@ -78,6 +79,8 @@
     \subitem {operator+=}, \hyperpage{19}
     \subitem {operator=}, \hyperpage{19}
     \subitem {operator[]}, \hyperpage{19, 20}
+  \item {clearRegistry}
+    \subitem {CipherFactory}, \hyperpage{12}
   \item {clone}
     \subitem {CaesarCipher}, \hyperpage{8}
     \subitem {Cipher}, \hyperpage{10}
@@ -85,7 +88,7 @@
     \subitem {MyCipher}, \hyperpage{24}
     \subitem {TranspositionCipher}, \hyperpage{28}
   \item {createCipher}
-    \subitem {CipherFactory}, \hyperpage{12}
+    \subitem {CipherFactory}, \hyperpage{13}
 
   \indexspace
 
