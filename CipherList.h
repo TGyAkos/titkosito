@@ -24,7 +24,7 @@ public:
     /**
      * Alap konstruktor.
      */
-    CipherList();
+    CipherList() = default;
     /**
      * Másoló konstruktor mély másolással.
      * @param   other a másolandó kódolólista
@@ -70,13 +70,13 @@ public:
      * @param   message titkosítandó üzenet
      * @return  titkosított szöveg
      */
-    std::string encode(const std::string &message);
+    std::string encode(const std::string &message) const;
     /**
      * Fordított sorrendben visszafejti a listával titkosított szöveget.
      * @param   ciphertext titkosított üzenet
      * @return  megfejtett nyílt szöveg
      */
-    std::string decode(const std::string &ciphertext);
+    std::string decode(const std::string &ciphertext) const;
     /**
      * Létrehoz egy dinamikus másolatot a listáról.
      * @return  a létrehozott másolat pointere

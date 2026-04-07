@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="titkosito" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../teststr.txt ../testCoding.txt" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="titkosito" TARGET_NAME="titkosito" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="titkosito" RUN_TARGET_NAME="titkosito">
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

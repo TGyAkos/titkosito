@@ -6,9 +6,8 @@
 
 #include <stdexcept>
 
-CipherList::CipherList() {}
 CipherList::CipherList(const CipherList &other) {
-    for (Cipher *cipher: other.ciphers)
+    for (const Cipher *cipher: other.ciphers)
         ciphers.push_back(cipher->clone());
 }
 CipherList &CipherList::operator=(const CipherList &other) {
@@ -17,7 +16,7 @@ CipherList &CipherList::operator=(const CipherList &other) {
     for (const Cipher *cipher: ciphers)
         delete cipher;
     ciphers.clear();
-    for (Cipher *cipher: other.ciphers)
+    for (const Cipher *cipher: other.ciphers)
         ciphers.push_back(cipher->clone());
     return *this;
 }
@@ -35,24 +34,24 @@ CipherList& CipherList::operator+=(const CipherList& other) {
         addCipher(cipher->clone());
     return *this;
 }
-Cipher &CipherList::operator[](size_t idx) {
+Cipher &CipherList::operator[](const size_t idx) {
     if (idx >= ciphers.size() || ciphers.empty())
         throw std::out_of_range("Cipher index out of range");
     return *ciphers[idx];
 }
-const Cipher &CipherList::operator[](size_t idx) const {
+const Cipher &CipherList::operator[](const size_t idx) const {
     if (idx >= ciphers.size() || ciphers.empty())
         throw std::out_of_range("Cipher index out of range");
     return *ciphers[idx];
 }
 void CipherList::addCipher(Cipher *cipher) { ciphers.push_back(cipher); }
-std::string CipherList::encode(const std::string &message) {
+std::string CipherList::encode(const std::string &message) const {
     std::string out = message;
     for (Cipher *cipher: ciphers)
         out = cipher->encode(out);
     return out;
 }
-std::string CipherList::decode(const std::string &ciphertext) {
+std::string CipherList::decode(const std::string &ciphertext) const {
     std::string out = ciphertext;
     for (size_t i = ciphers.size(); i > 0; --i)
         out = ciphers[i-1]->decode(out);

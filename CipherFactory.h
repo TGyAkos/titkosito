@@ -38,13 +38,13 @@ public:
      * @param   name a kódoló neve
      * @param   cipher a kódoló létrehozó függvénye
      */
-    void registerCipher(const std::string& name, std::function<Cipher*(const std::vector<std::string>&)> cipher);
+    void registerCipher(const std::string& name, std::function<Cipher*(const std::vector<std::string>&)> cipher) const;
     /**
      * Létrehoz egy kódolót a leíró string alapján.
      * @param   name kódoló leírás (név és paraméterek)
      * @return  a létrehozott kódoló objektum pointere
      */
-    Cipher* createCipher(const std::string& name);
+    Cipher* createCipher(const std::string& name) const;
     /**
      * Ellenőrzi, hogy létezik-e a megadott nevű kódoló.
      * @param   name a keresett kódoló neve
