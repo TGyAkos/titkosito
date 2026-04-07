@@ -147,7 +147,7 @@ sequenceDiagram
     Static Initialization ->>+ Registrar: Registrar<Cipher>(cipher_name)
     Registrar ->>+ CipherFactory: getInstance()
     CipherFactory -->>- Registrar: CipherFactory&
-    Registrar ->>+ CipherFactory: registerCipher(cipher_name, []() -> Cipher*)
+    Registrar ->>+ CipherFactory: registerCipher(cipher_name, [](params) -> Cipher*)
     deactivate CipherFactory
     destroy Registrar
     Registrar ->> Static Initialization: Registrar object created, cipher registered
