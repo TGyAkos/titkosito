@@ -16,21 +16,14 @@ std::vector<std::string> StringFuncs::split(std::string s, const std::string &de
         s.erase(0, pos + delimiter.length());
     }
     tokens.push_back(s);
-
     return tokens;
 }
-
-
 char StringFuncs::shift_char(char c, int shift) {
-    if (c == ' ') {
+    if (c == ' ')
         return c;
-    }
     const int base = c - 'a';
     int s = shift % 26;
-    if (s < 0) {
+    if (s < 0)
         s += 26;
-    }
     return 'a' + (base + s) % 26;
 }
-
-

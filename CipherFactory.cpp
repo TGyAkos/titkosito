@@ -42,8 +42,7 @@ Cipher* CipherFactory::createCipher(const std::string& cipher_string) {
         throw std::runtime_error("Invalid cipher name " + name);
     return it->second(params);
 }
-
-bool CipherFactory::cipherExists(const std::string &name) const { return ciphers.find(name) != ciphers.end(); }
+bool CipherFactory::cipherExists(const std::string &name) const { return ciphers.contains(name); }
 CipherFactory::~CipherFactory() {
     ciphers.clear();
 }

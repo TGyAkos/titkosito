@@ -5,87 +5,88 @@
 ```mermaid
 classDiagram
     class MessageFile {
-        -output_file_name: const std:: string: static
+        -output_file_name: const std::string : static
         +MessageFile()
-        +loadFile(file_name: const std:: string&) std:: string: static
-        +saveToFile(message: const std:: string&): static
-        +~ MessageFile()
+        +loadFile(file_name: const std::string&) std::string : static
+        +saveToFile(message: const std::string&) : static
+        +~MessageFile()
     }
     class CipherFile {
         +CipherFile()
-        +loadFile(file_name: const std:: string&) CipherList*: staic
-        +saveToFile(file_name: const std:: string&, cipher_list: CipherList*): staic
-        +~ CipherFile()
+        +loadFile(file_name: const std::string&) CipherList* : static
+        +saveToFile(file_name: const std::string&, cipher_list: CipherList*) : static
+        +~CipherFile()
     }
 
     class CipherFactory {
         <<singleton>>
-        -ciphers: std:: unordered_map~std::string, std::function< Cipher*(const std::vector<std::string>)&>~)
-        -parseCipherString(cipher_string: const std:: string&) std:: vector~std::string~: static
-        +getInstance() CipherFactory&: static
-        +registerCipher(cipher_name: const std:: string&, cipher: std:: function< Cipher*(const std:: vector<std:: string>&)>~)
-        +createCipher(cipher_string: const std:: string&) Cipher* \n
-        +cipherExists(const std:: string& cipher_name) bool const
-        +~ CipherFactory()
+        -ciphers: std::unordered_map~std::string, std::function< Cipher*(const std::vector<std::string>)&>~)
+        -parseCipherString(cipher_string: const std::string&) std::vector~std::string~ : static
+        +getInstance() CipherFactory& : static
+        +registerCipher(cipher_name: const std::string&, cipher : std::function< Cipher*(const std::vector<std::string>&)>~)
+        +createCipher(cipher_string: const std::string&) Cipher* \n
+        +cipherExists(const std::string& cipher_name) bool const
+        +~CipherFactory()
     }
 
     class Registrar {
         <<template>>
-        Registrar(const std:: string& name, const std:: vector~std::string~ & params)
+        Registrar(const std::string& name, const std::vector~std::string~& params)
     }
 
     class Cipher {
         <<interface>>
-        +encode(message: std:: string)* std:: string
-        +decode(ciphertext: std:: string)* std:: string
+        +encode(message: std::string)* std::string
+        +decode(ciphertext: std::string)* std::string
         +clone()* Cipher*
-        +getCipherString()* const std:: string const
-        +~ Cipher()*
+        +getCipherString()* const std::string const
+        +~Cipher()*
     }
 
     class CaesarCipher {
         -shift: int
         +CaesarCipher(shift: int)
-        +CaesarCipher(params: const std:: vector~std::string~ &)
-        +encode(message: std:: string) std:: string
-        +decode(ciphertext: std:: string) std:: string
+        +CaesarCipher(params: const std::vector~std::string~ &)
+        +encode(message: std::string) std::string
+        +decode(ciphertext: std::string) std::string
         +clone() Cipher* \n
-        +getCipherString() std:: string
-        +~ CaesarCipher()
+        +getCipherString() const std::string const
+        +~CaesarCipher()
     }
 
     class MyCipher {
-        -key: std:: string
+        -key: std::string
         -offset: int
-        -validate_key(const std:: string& key): static
-        -validate_text(const std:: string& text): static
+        -validate_key(const std::string& key) : static
+        -validate_text(const std::string& text) : static
         +MyCipher(key: const char*, offset: int)
         +MyCipher(params: const std:: vector~std::string~ &)
-        +encode(message: std:: string) std:: string
-        +decode(ciphertext: std:: string) std:: string
+        +encode(message: std::string) std::string
+        +decode(ciphertext: std::string) std::string
         +clone() Cipher* \n
-        +getCipherString() std:: string
-        +~ MyCipher()
+        +getCipherString() const std::string const
+        +~MyCipher()
     }
 
     class TranspositionCipher {
-        -matrix_size: int
+        -matrix_size: size_t
+        -validate_text(const std::string& text) : static
         +TranspositionCipher(matrix_size: int)
-        +TranspositionCipher(params: const std:: vector~std::string~ &)
-        +encode(message: std:: string) std:: string
-        +decode(ciphertext: std:: string) std:: string
+        +TranspositionCipher(params: const std::vector~std::string~ &)
+        +encode(message: std::string) std::string
+        +decode(ciphertext: std::string) std::string
         +clone() Cipher* \n
-        +getCipherString() std:: string
-        +~ TranspositionCipher()
+        +getCipherString() const std::string const
+        +~TranspositionCipher()
     }
 
     class StringFuncs {
-        +split(std:: string s, const std:: string& delimiter) std:: vector~std::string~: static
-        +char shift_char(char c, int shift): static
+        +split(std::string s, const std::string& delimiter) std::vector~std::string~ : static
+        +char shift_char(char c, int shift) : static
     }
 
     class CipherList {
-        -ciphers: std:: vector~Cipher*~
+        -ciphers: std::vector~Cipher*~
         +CipherList()
         +CipherList(other: const CipherList&)
         +operator=(other: const CipherList&) CipherList&
@@ -94,16 +95,16 @@ classDiagram
         +operator[](idx: size_t) Cipher&
         +operator[](idx: size_t) const Cipher& const
         +add(cipher: Cipher*) void
-        +encode(message: const std:: string&) std:: string
-        +decode(ciphertext: const std:: string&) std:: string
+        +encode(message: const std::string&) std::string
+        +decode(ciphertext: const std::string&) std::string
         +clone() CipherList* const
-        +begin() std:: vector~Cipher *~:: iterator;
-        +end() std:: vector~Cipher *~:: iterator;
-        +begin() const std:: vector~Cipher *~:: const_iterator;
-        +end() const std:: vector~Cipher *~:: const_iterator;
-        +cbegin() const std:: vector~Cipher *~:: const_iterator;
-        +cend() const std:: vector~Cipher *~:: const_iterator;
-        +~ CipherList()
+        +begin() std::vector~Cipher *~::iterator;
+        +end() std::vector~Cipher *~::iterator;
+        +begin() const std::vector~Cipher *~::const_iterator;
+        +end() const std::vector~Cipher *~::const_iterator;
+        +cbegin() const std::vector~Cipher *~::const_iterator;
+        +cend() const std::vector~Cipher *~::const_iterator;
+        +~CipherList()
     }
 
 

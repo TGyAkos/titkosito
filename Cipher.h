@@ -7,6 +7,9 @@
 
 
 
+/**
+ * Absztrakt ősosztály, amely a kódolók közös interfészét definiálja.
+ */
 class Cipher {
 public:
     /**

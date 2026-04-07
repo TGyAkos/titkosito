@@ -1,1 +1,1 @@
-CaesarCipher:0-MyCipher:cipher-CaesarCipher:
+CaesarCipher:0-MyCipher:cipher,7-CaesarCipher:1-TranspositionCipher:5

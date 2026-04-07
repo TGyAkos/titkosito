@@ -6,14 +6,15 @@
 #include "gtest_lite.h"
 #include "memtrace.h"
 
-std::string MessageFile::output_file_name = "../result.txt";
 
-// #define INCLUDE_TESTS
+#define INCLUDE_TESTS
 
 #ifdef INCLUDE_TESTS
 #include "test.h"
+std::string MessageFile::output_file_name = "./testresult.txt";
+#else
+std::string MessageFile::output_file_name = "./result.txt";
 #endif
-
 
 int main(int argc, char *argv[]) {
     try {

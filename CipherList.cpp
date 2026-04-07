@@ -8,9 +8,8 @@
 
 CipherList::CipherList() {}
 CipherList::CipherList(const CipherList &other) {
-    for (Cipher *cipher: other.ciphers) {
+    for (Cipher *cipher: other.ciphers)
         ciphers.push_back(cipher->clone());
-    }
 }
 CipherList &CipherList::operator=(const CipherList &other) {
     if (this == &other)
@@ -18,9 +17,8 @@ CipherList &CipherList::operator=(const CipherList &other) {
     for (const Cipher *cipher: ciphers)
         delete cipher;
     ciphers.clear();
-    for (Cipher *cipher: other.ciphers) {
+    for (Cipher *cipher: other.ciphers)
         ciphers.push_back(cipher->clone());
-    }
     return *this;
 }
 CipherList CipherList::operator+(const CipherList& other) const {
@@ -33,9 +31,8 @@ CipherList& CipherList::operator+=(const CipherList& other) {
         CipherList tmp(other);
         return (*this += tmp);
     }
-    for (const Cipher* cipher : other) {
+    for (const Cipher* cipher : other)
         addCipher(cipher->clone());
-    }
     return *this;
 }
 Cipher &CipherList::operator[](size_t idx) {
@@ -57,8 +54,8 @@ std::string CipherList::encode(const std::string &message) {
 }
 std::string CipherList::decode(const std::string &ciphertext) {
     std::string out = ciphertext;
-    for (Cipher *cipher: ciphers)
-        out = cipher->decode(out);
+    for (size_t i = ciphers.size(); i > 0; --i)
+        out = ciphers[i-1]->decode(out);
     return out;
 }
 CipherList *CipherList::clone() const { return new CipherList(*this); }

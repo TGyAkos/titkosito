@@ -15,28 +15,20 @@ const std::string MyCipher::getCipherString() const {
 }
 
 void MyCipher::validate_key(const std::string &key) {
-    if (key.empty()) {
+    if (key.empty())
         throw std::runtime_error(std::string("Key cannot be empty"));
-    }
-    for (size_t i = 0; i < key.size(); ++i) {
-        if ((key[i] < 'a' || key[i] > 'z') && (key[i] < 'A' || key[i] > 'Z')) {
-            throw std::runtime_error(std::string("Invalid character '") + key[i] + std::string("'"));
-        }
-    }
+    for (char i : key)
+        if ((i < 'a' || i > 'z') && (i < 'A' || i > 'Z'))
+            throw std::runtime_error(std::string("Invalid character '") + i + std::string("'"));
 }
-
 void MyCipher::validate_text(const std::string &text) {
-    for (size_t i = 0; i < text.size(); ++i) {
-        if (!(text[i] == ' ' || (text[i] >= 'a' && text[i] <= 'z'))) {
-            throw std::runtime_error(std::string("Invalid character '") + text[i] + std::string("'"));
-        }
-    }
+    for (char i : text)
+        if (!(i == ' ' || (i >= 'a' && i <= 'z')))
+            throw std::runtime_error(std::string("Invalid character '") + i + std::string("'"));
 }
-
 Cipher *MyCipher::clone() const {
     return new MyCipher(key.c_str(), offset);
 }
-
 std::string MyCipher::encode(const std::string &message) {
     validate_key(key);
     validate_text(message);
@@ -48,7 +40,6 @@ std::string MyCipher::encode(const std::string &message) {
     }
     return out;
 }
-
 std::string MyCipher::decode(const std::string &ciphertext) {
     validate_key(key);
     validate_text(ciphertext);
@@ -60,7 +51,3 @@ std::string MyCipher::decode(const std::string &ciphertext) {
     }
     return out;
 }
-
-
-
-MyCipher::~MyCipher() {}

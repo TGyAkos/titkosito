@@ -11,10 +11,18 @@
 
 #include <iostream>
 #include <ctime>
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
 
 #include "CaesarCipher.h"
+#include "CipherFactory.h"
+#include "CipherFile.h"
 #include "CipherList.h"
+#include "MessageFile.h"
 #include "MyCipher.h"
+#include "StringFuncs.h"
+#include "TranspositionCipher.h"
 #include "gtest_lite.h"
 #include "memtrace.h"
 
@@ -89,6 +97,24 @@ void tests() {
             EXPECT_STREQ("virtualis destruktor", b.c_str());
         } END
 
+    //Transposition cipher tesztek
+        TEST(TranspositionCipher size=4, _titkositas) {
+            TranspositionCipher tc(4);
+            std::string a = tc.encode("titkositas");
+            EXPECT_STREQ("toaisstikt", a.c_str());
+            std::string b = tc.decode(a);
+            EXPECT_STREQ("titkositas", b.c_str());
+        } END
+
+        TEST(TranspositionCipher size=3, _no_padding_and_capacity_limit) {
+            TranspositionCipher tc(3);
+            std::string encoded = tc.encode("abcdefg");
+            EXPECT_STREQ("adgbecf", encoded.c_str());
+            std::string decoded = tc.decode(encoded);
+            EXPECT_STREQ("abcdefg", decoded.c_str());
+            EXPECT_THROW(tc.encode("abcdefghij"), const std::runtime_error&);
+        } END
+
     //CipherList tesztek
         TEST(Cipher_List: caesar + mycipher, _meg tobb szorgalmit prog2bol) {
             CipherList List;
@@ -127,12 +153,142 @@ void tests() {
         } END
 
 
-        //Neptun ellenőrzése
-        TEST(Kivetelek, Caesar/MyCipher) {
+        //Cipher Kivétel tesztek
+        TEST(Kivetelek, MyCipher) {
             MyCipher mc("a");
             try {
-                EXPECT_THROW_THROW(mc.encode("_"), std::runtime_error&);
-            } catch (std::runtime_error &e) {
+                EXPECT_THROW_THROW(mc.encode("_"), const std::runtime_error&);
+            } catch (const std::runtime_error& e) {
+            }
+        } END
+
+        //StringFuncs tesztek
+        TEST(StringFuncs, split_and_shift_char) {
+            std::vector<std::string> tokens = StringFuncs::split("a:b:c", ":");
+            EXPECT_EQ(3, static_cast<int>(tokens.size()));
+            EXPECT_STREQ("a", tokens[0].c_str());
+            EXPECT_STREQ("b", tokens[1].c_str());
+            EXPECT_STREQ("c", tokens[2].c_str());
+            EXPECT_EQ('c', StringFuncs::shift_char('a', 2));
+            EXPECT_EQ('z', StringFuncs::shift_char('b', -2));
+            EXPECT_EQ(' ', StringFuncs::shift_char(' ', 17));
+        } END
+
+        //CipherFactory tesztek
+        TEST(CipherFactory, exists_and_create) {
+            CipherFactory& factory = CipherFactory::getInstance();
+            EXPECT_TRUE(factory.cipherExists("CaesarCipher"));
+            EXPECT_TRUE(factory.cipherExists("MyCipher"));
+            EXPECT_TRUE(factory.cipherExists("TranspositionCipher"));
+
+            Cipher* c1 = factory.createCipher("CaesarCipher:2");
+            Cipher* c2 = factory.createCipher("MyCipher:abc,1");
+            Cipher* c3 = factory.createCipher("TranspositionCipher:4");
+
+            EXPECT_STREQ("CaesarCipher:2", c1->getCipherString().c_str());
+            EXPECT_STREQ("MyCipher:abc,1", c2->getCipherString().c_str());
+            EXPECT_STREQ("TranspositionCipher:4", c3->getCipherString().c_str());
+
+            delete c1;
+            delete c2;
+            delete c3;
+        } END
+
+        TEST(CipherFactory, invalid_inputs_throw) {
+            CipherFactory& factory = CipherFactory::getInstance();
+            EXPECT_THROW(factory.createCipher("CaesarCipher"), const std::runtime_error&);
+            EXPECT_THROW(factory.createCipher("UnknownCipher:1"), const std::runtime_error&);
+            EXPECT_THROW(factory.createCipher("CaesarCipher:1:2"), const std::runtime_error&);
+        } END
+
+        //CipherList tesztek
+        TEST(CipherList, operators_index_and_clone) {
+            CipherList first;
+            first.addCipher(new CaesarCipher(1));
+            CipherList second;
+            second.addCipher(new MyCipher("abc", 0));
+
+            CipherList merged = first + second;
+            EXPECT_STREQ("CaesarCipher:1", merged[0].getCipherString().c_str());
+            EXPECT_STREQ("MyCipher:abc,0", merged[1].getCipherString().c_str());
+            EXPECT_THROW(merged[2], const std::out_of_range&);
+
+            CipherList assigned;
+            assigned = merged;
+            std::string msg = "alma korte";
+            EXPECT_STREQ(merged.encode(msg).c_str(), assigned.encode(msg).c_str());
+
+            CipherList* cloned = merged.clone();
+            EXPECT_STREQ(merged.decode(merged.encode(msg)).c_str(), cloned->decode(cloned->encode(msg)).c_str());
+            delete cloned;
+        } END
+
+        //CipherFile,MessageFile tesztek
+        TEST(CipherFile_MessageFile, message_and_cipher_temp_files) {
+            const std::string msg_file = "./messagetest.txt";
+            const std::string cipher_file = "./codetest.txt";
+            std::ofstream out(msg_file);
+            out << "hello from temp file";
+            out.close();
+            EXPECT_STREQ("hello from temp file", MessageFile::loadFile(msg_file).c_str());
+
+            CipherList original;
+            original.addCipher(new CaesarCipher(3));
+            original.addCipher(new MyCipher("abc", 2));
+            CipherFile::saveToFile(cipher_file, &original);
+
+            CipherList* loaded = CipherFile::loadFile(cipher_file);
+            std::string input = "hello from temp file";
+            EXPECT_STREQ(original.encode(input).c_str(), loaded->encode(input).c_str());
+            EXPECT_STREQ(input.c_str(), loaded->decode(loaded->encode(input)).c_str());
+
+            delete loaded;
+            std::remove(msg_file.c_str());
+            std::remove(cipher_file.c_str());
+        } END
+
+        TEST(End_to_End, simulated_main_encode_flow_without_executable) {
+            const std::string msg_file = "messagetest", cipher_file = "codetest", result_file = "./testresult.txt";
+            std::string backup_result;
+            bool result_existed = false;
+
+            std::ifstream in(result_file);
+            if (in.is_open()) {
+                result_existed = true;
+                backup_result = std::string((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+            }
+            in.close();
+
+            std::ofstream msg_out(msg_file);
+            msg_out << "hello world";
+            msg_out.close();
+
+            std::ofstream cipher_out(cipher_file);
+            cipher_out << "CaesarCipher:2-MyCipher:abc,1-TranspositionCipher:4";
+            cipher_out.close();
+
+            const std::string message_string = MessageFile::loadFile(msg_file);
+            CipherList* cipher_list = CipherFile::loadFile(cipher_file);
+            const std::string coded_message_string = cipher_list->encode(message_string);
+
+            MessageFile::saveToFile(coded_message_string);
+            CipherFile::saveToFile(cipher_file, cipher_list);
+
+            EXPECT_STREQ(coded_message_string.c_str(), MessageFile::loadFile(result_file).c_str());
+
+            CipherList* persisted = CipherFile::loadFile(cipher_file);
+            EXPECT_STREQ(message_string.c_str(), persisted->decode(coded_message_string).c_str());
+
+            delete persisted;
+            delete cipher_list;
+            std::remove(msg_file.c_str());
+            std::remove(cipher_file.c_str());
+
+            if (result_existed) {
+                std::ofstream out(result_file);
+                out << backup_result;
+            } else {
+                std::remove(result_file.c_str());
             }
         } END
 
